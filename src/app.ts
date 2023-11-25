@@ -1,6 +1,8 @@
-const name1 = 'mostofa';
+import express from 'express';
+const app = express();
 
-console.log(name1);
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
-const name2 = 'kamal';
-console.log(name2);
+export default app;
