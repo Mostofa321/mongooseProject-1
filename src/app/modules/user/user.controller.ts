@@ -21,6 +21,25 @@ const createUserController = async (req: Request, res: Response) => {
   }
 };
 
+// get all users (controller function)
+const getAllUserController = async (req: Request, res: Response) => {
+  try {
+    const allUsers = await services.getAllUsers();
+    res.status(200).json({
+      success: true,
+      message: 'Users fetched successfully!',
+      data: allUsers,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'somthing went wrong',
+      error,
+    });
+  }
+};
+
 export default {
   createUserController,
+  getAllUserController,
 };

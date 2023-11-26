@@ -7,6 +7,15 @@ const createUser = async (userData: IUser) => {
   return result;
 };
 
+// get all users from db
+const getAllUsers = async () => {
+  const result = await User.find({}).select(
+    'username fullName age email address',
+  );
+  return result;
+};
+
 export default {
   createUser,
+  getAllUsers,
 };
