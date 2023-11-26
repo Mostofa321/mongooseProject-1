@@ -90,9 +90,35 @@ const updateSingleUserController = async (req: Request, res: Response) => {
   }
 };
 
+// delate single user (controller function)
+const delateSingleUserController = async (req: Request, res: Response) => {
+  try {
+    const userId: number = Number(req.params.userId);
+    let result = await services.deleteSingleUser(userId);
+    if (result.deletedCount === 0) {
+      throw new Error('User not found');
+    }
+    res.status(200).json({
+      success: true,
+      message: 'User deleted successfully!',
+      data: (result = null),
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
+
 export default {
   createUserController,
   getAllUserController,
   getSingleUserController,
   updateSingleUserController,
+  delateSingleUserController,
 };

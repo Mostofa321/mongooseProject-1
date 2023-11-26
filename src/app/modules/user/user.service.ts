@@ -32,9 +32,16 @@ const updateSingleUser = async (userId: number, userData: IUser) => {
   }
 };
 
+// delete single user from db
+const deleteSingleUser = async (userId: number) => {
+  const result = await User.deleteOne({ userId: userId });
+  return result;
+};
+
 export default {
   createUser,
   getAllUsers,
   getSingleUser,
   updateSingleUser,
+  deleteSingleUser,
 };

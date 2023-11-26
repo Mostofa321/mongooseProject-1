@@ -11,4 +11,6 @@ router.get('/:userId', controllers.getSingleUserController);
 
 router.put('/:userId', controllers.updateSingleUserController);
 
+router.delete('/:userId', controllers.delateSingleUserController);
+
 export default router;
