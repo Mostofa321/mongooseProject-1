@@ -1,12 +1,16 @@
 import { Request, Response } from 'express';
 import services from './user.service';
 import { IUser } from './user.interface';
+import userValidationSchema, {
+  userValidationSchemaForPutReq,
+} from './validation';
 
 // create a user (controller function)
 const createUserController = async (req: Request, res: Response) => {
   try {
     const userData: IUser = req.body;
-    const createdUser = await services.createUser(userData);
+    const validUser = await userValidationSchema.validateAsync(userData);
+    const createdUser = await services.createUser(validUser);
     res.status(200).json({
       success: true,
       message: 'User created successfully!',
@@ -69,7 +73,10 @@ const updateSingleUserController = async (req: Request, res: Response) => {
   try {
     const userId: number = Number(req.params.userId);
     const userData: IUser = req.body;
-    const data = await services.updateSingleUser(userId, userData);
+    const validUser =
+      await userValidationSchemaForPutReq.validateAsync(userData);
+
+    const data = await services.updateSingleUser(userId, validUser);
     if (!data) {
       throw new Error('User not found!');
     }
