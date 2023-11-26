@@ -15,7 +15,14 @@ const getAllUsers = async () => {
   return result;
 };
 
+// get single user from db
+const getSingleUser = async (userId: number) => {
+  const result = await User.findOne({ userId: userId }).select('-password');
+  return result;
+};
+
 export default {
   createUser,
   getAllUsers,
+  getSingleUser,
 };

@@ -7,4 +7,6 @@ router.post('/', controllers.createUserController);
 
 router.get('/', controllers.getAllUserController);
 
+router.get('/:userId', controllers.getSingleUserController);
+
 export default router;
