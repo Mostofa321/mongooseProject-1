@@ -21,8 +21,20 @@ const getSingleUser = async (userId: number) => {
   return result;
 };
 
+// update single user to db
+const updateSingleUser = async (userId: number, userData: IUser) => {
+  const result = await User.updateOne({ userId: userId }, { $set: userData });
+  if (result.acknowledged) {
+    const updaterUser = await User.findOne({ userId: userId }).select(
+      '-password',
+    );
+    return updaterUser;
+  }
+};
+
 export default {
   createUser,
   getAllUsers,
   getSingleUser,
+  updateSingleUser,
 };

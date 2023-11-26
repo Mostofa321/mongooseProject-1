@@ -9,4 +9,6 @@ router.get('/', controllers.getAllUserController);
 
 router.get('/:userId', controllers.getSingleUserController);
 
+router.put('/:userId', controllers.updateSingleUserController);
+
 export default router;
