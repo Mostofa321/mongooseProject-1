@@ -1,10 +1,10 @@
 import express from 'express';
+import cors from 'cors';
 import useRouter from './app/modules/user/user.routes';
 const app = express();
 
-// database url: mongodb+srv://Mostofa:Mostofa....1998@cluster0.nggon70.mongodb.net/userDb?retryWrites=true&w=majority
-
 // midlwer and parsers
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', useRouter);
