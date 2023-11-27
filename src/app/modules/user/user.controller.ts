@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import services from './user.service';
-import { IUser } from './user.interface';
+import { IOrder, IUser } from './user.interface';
 import userValidationSchema, {
+  orderValidationSchema,
   userValidationSchemaForPutReq,
 } from './validation';
 
@@ -122,10 +123,41 @@ const delateSingleUserController = async (req: Request, res: Response) => {
   }
 };
 
+// put order (controller function)
+const putOrderController = async (req: Request, res: Response) => {
+  try {
+    const userId: number = Number(req.params.userId);
+    const order: IOrder = req.body;
+    const validOrder = await orderValidationSchema.validateAsync(order);
+
+    const data = await services.putOrder(userId, validOrder);
+
+    if (!data.acknowledged) {
+      throw new Error('User not found!');
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
+
 export default {
   createUserController,
   getAllUserController,
   getSingleUserController,
   updateSingleUserController,
   delateSingleUserController,
+  putOrderController,
 };

@@ -13,4 +13,6 @@ router.put('/:userId', controllers.updateSingleUserController);
 
 router.delete('/:userId', controllers.delateSingleUserController);
 
+router.put('/:userId/orders', controllers.putOrderController);
+
 export default router;

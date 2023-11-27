@@ -24,6 +24,15 @@ const userSchema: Schema = new Schema<IUser>({
     },
     required: true,
   },
+  orders: {
+    type: [
+      {
+        productName: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+  },
 });
 
 userSchema.post('save', (doc, next) => {

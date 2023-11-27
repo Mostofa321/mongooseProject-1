@@ -1,4 +1,4 @@
-import { IUser } from './user.interface';
+import { IOrder, IUser } from './user.interface';
 import User from './user.model';
 
 // create a new user
@@ -38,10 +38,21 @@ const deleteSingleUser = async (userId: number) => {
   return result;
 };
 
+// put order
+const putOrder = async (userId: number, order: IOrder) => {
+  const result = await User.updateOne(
+    { userId: userId },
+    { $addToSet: { orders: order } },
+  );
+
+  return result;
+};
+
 export default {
   createUser,
   getAllUsers,
   getSingleUser,
   updateSingleUser,
   deleteSingleUser,
+  putOrder,
 };

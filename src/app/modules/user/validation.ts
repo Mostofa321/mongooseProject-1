@@ -19,6 +19,12 @@ const userValidationSchema = Joi.object({
   }).required(),
 });
 
+export const orderValidationSchema = Joi.object({
+  productName: Joi.string().required(),
+  price: Joi.number().required(),
+  quantity: Joi.number().required(),
+});
+
 export const userValidationSchemaForPutReq = Joi.object({
   userId: Joi.number(),
   username: Joi.string(),
