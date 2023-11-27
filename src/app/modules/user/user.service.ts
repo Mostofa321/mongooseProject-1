@@ -54,6 +54,22 @@ const getAllOrdersOfUser = async (userId: number) => {
   return result;
 };
 
+// get Total Price of Orders for a Specific User
+const getTotal = async (userId: number) => {
+  const result = await User.aggregate([
+    // match or query stage
+    {
+      $match: { userId: userId },
+    },
+    // project or field filtering stage
+    {
+      $project: { totalPrice: { $sum: '$orders.price' }, _id: 0 },
+    },
+  ]);
+
+  return result;
+};
+
 export default {
   createUser,
   getAllUsers,
@@ -62,4 +78,5 @@ export default {
   deleteSingleUser,
   putOrder,
   getAllOrdersOfUser,
+  getTotal,
 };

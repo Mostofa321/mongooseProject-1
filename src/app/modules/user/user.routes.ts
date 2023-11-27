@@ -17,4 +17,6 @@ router.put('/:userId/orders', controllers.putOrderController);
 
 router.get('/:userId/orders', controllers.getAllOrdersOfUserController);
 
+router.get('/:userId/orders/total-price', controllers.getTotalController);
+
 export default router;
