@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IUser } from './user.interface';
+import bcrypt from 'bcrypt';
 
 const userSchema: Schema = new Schema<IUser>({
   userId: { type: Number, required: true, unique: true },
@@ -33,6 +34,13 @@ const userSchema: Schema = new Schema<IUser>({
       },
     ],
   },
+});
+
+userSchema.pre('save', async function (next) {
+  const hashedPassword = await bcrypt.hash(this.password, 10);
+  this.password = hashedPassword;
+
+  next();
 });
 
 userSchema.post('save', (doc, next) => {
