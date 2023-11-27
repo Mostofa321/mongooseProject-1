@@ -48,6 +48,12 @@ const putOrder = async (userId: number, order: IOrder) => {
   return result;
 };
 
+// get all orders for a specific user from db
+const getAllOrdersOfUser = async (userId: number) => {
+  const result = await User.findOne({ userId: userId }).select('orders -_id');
+  return result;
+};
+
 export default {
   createUser,
   getAllUsers,
@@ -55,4 +61,5 @@ export default {
   updateSingleUser,
   deleteSingleUser,
   putOrder,
+  getAllOrdersOfUser,
 };

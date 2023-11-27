@@ -153,6 +153,31 @@ const putOrderController = async (req: Request, res: Response) => {
   }
 };
 
+// get all orders for a specific user (controller function)
+const getAllOrdersOfUserController = async (req: Request, res: Response) => {
+  try {
+    const userId: number = Number(req.params.userId);
+    const data = await services.getAllOrdersOfUser(userId);
+    if (!data) {
+      throw new Error('User not found');
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Order fetched successfully!',
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
+
 export default {
   createUserController,
   getAllUserController,
@@ -160,4 +185,5 @@ export default {
   updateSingleUserController,
   delateSingleUserController,
   putOrderController,
+  getAllOrdersOfUserController,
 };
