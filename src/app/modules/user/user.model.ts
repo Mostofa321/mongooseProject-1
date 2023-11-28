@@ -43,7 +43,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.post('save', (doc, next) => {
+userSchema.post('save', async function (doc, next) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, ...newDoc } = doc._doc;
   doc._doc = newDoc;

@@ -5,6 +5,7 @@ import userValidationSchema, {
   orderValidationSchema,
   userValidationSchemaForPutReq,
 } from './validation';
+import bcrypt from 'bcrypt';
 
 // create a user (controller function)
 const createUserController = async (req: Request, res: Response) => {
@@ -74,8 +75,16 @@ const updateSingleUserController = async (req: Request, res: Response) => {
   try {
     const userId: number = Number(req.params.userId);
     const userData: IUser = req.body;
+
     const validUser =
       await userValidationSchemaForPutReq.validateAsync(userData);
+
+    const password = validUser?.password;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      validUser.password = hashedPassword;
+    }
 
     const data = await services.updateSingleUser(userId, validUser);
     if (!data) {

@@ -61,9 +61,25 @@ const getTotal = async (userId: number) => {
     {
       $match: { userId: userId },
     },
+    // unwind stage
+    {
+      $unwind: '$orders',
+    },
+    // group stage
+    {
+      $group: {
+        _id: null,
+        totalPrice: {
+          $sum: { $multiply: ['$orders.price', '$orders.quantity'] },
+        },
+      },
+    },
     // project or field filtering stage
     {
-      $project: { totalPrice: { $sum: '$orders.price' }, _id: 0 },
+      $project: {
+        totalPrice: 1,
+        _id: 0,
+      },
     },
   ]);
 
